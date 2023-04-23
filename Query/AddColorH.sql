@@ -1,0 +1,6 @@
+DELETE FROM CLR;
+
+INSERT INTO CLR ("Id", "Name")
+VALUES
+	{0};
+

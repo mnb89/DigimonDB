@@ -1,0 +1,15 @@
+﻿<Window x:Class="DIgimonDB.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DIgimonDB"
+        mc:Ignorable="d"
+        Title="Digimon TCG Manager" WindowState="Maximized" Height="450" Width="800">
+    <Grid>
+        <Image HorizontalAlignment="Left" Height="Auto" Margin="20" VerticalAlignment="Top" Width="400" Source="/Img/logo.png"/>
+        <Button x:Name="GetData" Content="SyncDB" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" Height="20" Width="60" Click="GetData_Click"/>
+        <ProgressBar x:Name="ProgBar" Margin="80,10,10,10" Width="Auto" Height="20" VerticalAlignment="Top" Minimum="0" Maximum="100" />
+
+    </Grid>
+</Window>

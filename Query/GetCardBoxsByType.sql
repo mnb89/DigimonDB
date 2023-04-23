@@ -1,0 +1,9 @@
+SELECT
+	CRDBOX.* ,
+	BOXTYPE."Name",
+	BOXTYPE."Tag"
+FROM
+	CRDBOX
+	INNER JOIN BOXTYPE ON CRDBOX."TypeId" = BOXTYPE."Id"
+WHERE 
+	"Type" = '{0}'

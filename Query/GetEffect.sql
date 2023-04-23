@@ -1,0 +1,6 @@
+SELECT
+	*
+FROM
+	EFCT
+ORDER BY
+	"Id"

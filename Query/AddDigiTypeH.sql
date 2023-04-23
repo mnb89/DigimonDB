@@ -1,0 +1,4 @@
+INSERT INTO DIGITYPE ("Id", "Name")
+VALUES
+	{0};
+

@@ -18,6 +18,9 @@ namespace DigimonDB.Models
         public string? Tag { get; set; }
         public bool ShouldSerializeTag() { return !string.IsNullOrWhiteSpace(Tag); }
 
+        public string? ImageUrl { get; set; }
+        public bool ShouldSerializeImageUrl() { return !string.IsNullOrWhiteSpace(ImageUrl); }
+
         public string? ImagePath { get; set; }
         public bool ShouldSerializeImagePath() { return !string.IsNullOrWhiteSpace(ImagePath); }
 
@@ -150,7 +153,7 @@ namespace DigimonDB.Models
         public string? SecurityEffect { get; set; }
         public bool ShouldSerializeSecurityEffect() { return !string.IsNullOrWhiteSpace(SecurityEffect); }
 
-        public List<string> Imgs { get; set; }
+        public List<GenericImage> Imgs { get; set; }
 
         public bool ShouldSerializeImgs() { return Imgs.Count > 0; }
 
@@ -159,7 +162,7 @@ namespace DigimonDB.Models
         {
             IsParallel = false;
             DigimonTypes = new List<string>();
-            Imgs = new List<string>();
+            Imgs = new List<GenericImage>();
         }
 
     }
@@ -176,5 +179,28 @@ namespace DigimonDB.Models
         public bool ShouldSerializeValue() { return !string.IsNullOrWhiteSpace(Value); }
     }
 
+    public class GenericImage
+    {
+        public long Id { get; set; }
+        public bool ShouldSerializeId() { return Id > 0; }
+
+        public string? Code { get; set; }
+        public bool ShouldSerializeCode() { return !string.IsNullOrWhiteSpace(Code); }
+
+        public string? IsParallel { get; set; }
+        public bool ShouldSerializeIsParallel() { return !string.IsNullOrWhiteSpace(IsParallel); }
+
+        public string? Rarity { get; set; }
+        public bool ShouldSerializeRarity() { return !string.IsNullOrWhiteSpace(Rarity); }
+
+        public long BoxId { get; set; }
+        public bool ShouldSerializeBoxId() { return BoxId > 0; ; }
+
+        public string? ImgUrl { get; set; }
+        public bool ShouldSerializeImgUrl() { return !string.IsNullOrWhiteSpace(ImgUrl); }
+
+        public string? ImgPath { get; set; }
+        public bool ShouldSerializeImgPath() { return !string.IsNullOrWhiteSpace(ImgPath); }
+    }
 
 }

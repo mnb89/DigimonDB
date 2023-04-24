@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Migrations.Model;
@@ -72,6 +73,7 @@ namespace DigimonDB.Models
 
             try
             {
+                //TODO
                 string _sql = GetSqlString("Query/CreateTables");
 
                 sqlite_cmd = conn.CreateCommand();
@@ -185,7 +187,7 @@ namespace DigimonDB.Models
                         if (_typeString != null)
                             _crdBox.Type = (CLTYPE) Enum.Parse(typeof(CLTYPE), _typeString);
 
-                        _crdBox.ImagePath = _reader.GetValue(4).ToString();
+                        _crdBox.ImageUrl = _reader.GetValue(4).ToString();
 
                         _result.Add( _crdBox );
                     }
@@ -438,7 +440,7 @@ namespace DigimonDB.Models
                     bt.Name ?? string.Empty,
                     bt.Tag ?? string.Empty,
                     _typeId.ToString(),
-                    bt.ImagePath ?? string.Empty,
+                    bt.ImageUrl ?? string.Empty,
                 };
 
                 if(bt.Status.Equals(STATUS.NEW))
@@ -540,7 +542,7 @@ namespace DigimonDB.Models
             }
         }
 
-        public static void WriteCards(SQLiteConnection conn, List<Card> wCards)
+        public static void WriteCards(SQLiteConnection conn, List<Card> wCards, BackgroundWorker worker, DoWorkEventArgs e)
         {
             if (conn.State == ConnectionState.Closed)
                 conn.Open();
@@ -597,7 +599,7 @@ namespace DigimonDB.Models
                                 card.Rarity,
                                 card.BoxCode,
                                 card.Code,
-                                img
+                                img.ImgUrl
                             };
 
                             _imgSqls.Add(GetSqlString("Query/AddImageR",_imgValues));
@@ -797,13 +799,12 @@ namespace DigimonDB.Models
                             card.Rarity,
                             card.BoxCode,
                             card.Code,
-                            img
+                            img.ImgUrl
                         };
 
                         _imgSqls.Add(GetSqlString("Query/AddImageR", _imgValues));
                     }
                 }
-
 
                 if (_nSqls.Count > 0)
                 {
@@ -1058,6 +1059,153 @@ namespace DigimonDB.Models
             }
 
             return _result;
+        }
+
+        public static List<GenericImage> GetAllBoxImage(SQLiteConnection conn, bool onlyNew, BackgroundWorker worker, DoWorkEventArgs e)
+        {
+            var _result = new List<GenericImage>();
+            if (conn.State == ConnectionState.Closed)
+                conn.Open();
+
+            try
+            {
+                SQLiteDataReader _reader;
+                SQLiteCommand _cmd = conn.CreateCommand();
+
+                var _filter = string.Empty;
+
+                if (onlyNew)
+                    _filter = "AND \"ImgPath\" IS NULL";
+
+                _cmd.CommandText = GetSqlString("Query/GetAllBoxImages", _filter);
+                _reader = _cmd.ExecuteReader();
+
+                if (_reader.HasRows)
+                {
+                    while (_reader.Read())
+                    {
+                        _result.Add(new GenericImage()
+                        {
+                            Id = _reader.GetInt32(0),
+                            Code = _reader.GetValue(1).ToString(),
+                            ImgUrl = _reader.GetValue(2).ToString(),
+                            ImgPath = _reader.GetValue(3).ToString()
+                        });
+                    }
+                }
+
+                conn.Close();
+            }
+            catch (Exception)
+            {
+                //TODO
+                conn.Close();
+            }
+
+            return _result;
+        }
+
+        public static List<GenericImage> GetAllCardImage(SQLiteConnection conn, bool onlyNew, BackgroundWorker worker, DoWorkEventArgs e)
+        {
+            var _result = new List<GenericImage>();
+            if (conn.State == ConnectionState.Closed)
+                conn.Open();
+
+            try
+            {
+                SQLiteDataReader _reader;
+                SQLiteCommand _cmd = conn.CreateCommand();
+
+                var _filter = string.Empty;
+
+                if (onlyNew)
+                    _filter = "AND \"ImgPath\" IS NULL";
+
+                _cmd.CommandText = GetSqlString("Query/GetAllCardImages", _filter);
+
+                _reader = _cmd.ExecuteReader();
+
+                if (_reader.HasRows)
+                {
+                    while (_reader.Read())
+                    {
+                        _result.Add(new GenericImage()
+                        {
+                            Id = _reader.GetInt32(0),
+                            IsParallel = _reader.GetValue(1).ToString(),
+                            Rarity = _reader.GetValue(2).ToString(),
+                            BoxId = _reader.GetInt32(3),
+                            Code = _reader.GetValue(4).ToString(),
+                            ImgUrl = _reader.GetValue(5).ToString(),
+                            ImgPath = _reader.GetValue(6).ToString()
+                        });
+                    }
+                }
+
+                conn.Close();
+            }
+            catch (Exception)
+            {
+
+                conn.Close();
+            }
+
+            return _result;
+
+        }
+
+        internal static void UpdateBoxImages(SQLiteConnection conn, List<GenericImage> list, BackgroundWorker worker, DoWorkEventArgs e)
+        {
+            if (conn.State == ConnectionState.Closed)
+                conn.Open();
+
+            SQLiteCommand _cmd = conn.CreateCommand();
+            var _sqls = new List<string>();
+
+            foreach (var img in list)
+            {
+                var _values = new string[]
+                {
+                    img.Id.ToString(),
+                    img.ImgPath
+                };
+
+                _sqls.Add(GetSqlString("Query/UpdBoxImageR", _values));
+            }
+
+            if (_sqls.Count > 0)
+            {
+                _cmd.CommandText = string.Join(" ", _sqls);
+                _cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
+
+        internal static void UpdateCardImages(SQLiteConnection conn, List<GenericImage> list, BackgroundWorker worker, DoWorkEventArgs e)
+        {
+            if (conn.State == ConnectionState.Closed)
+                conn.Open();
+
+            SQLiteCommand _cmd = conn.CreateCommand();
+            var _sqls = new List<string>();
+
+            foreach (var img in list)
+            {
+                var _values = new string[]
+                {
+                    img.Id.ToString(),
+                    img.ImgPath
+                };
+
+                _sqls.Add(GetSqlString("Query/UpdCardImageR", _values));
+            }
+
+            if (_sqls.Count > 0)
+            {
+                _cmd.CommandText = string.Join(" ", _sqls);
+                _cmd.ExecuteNonQuery();
+                conn.Close();
+            }
         }
     }
 }

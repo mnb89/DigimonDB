@@ -12,6 +12,8 @@ using System.Windows.Controls;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Net.WebRequestMethods;
 using System.Text.RegularExpressions;
+using System.ComponentModel;
+using System.IO;
 
 namespace DigimonDB.Models
 {
@@ -93,7 +95,7 @@ namespace DigimonDB.Models
                         {
                            var _imgNode = prodImg.SelectSingleNode(".//div[@class='image']//img");
 
-                            _crdBox.ImagePath = _imgNode.Attributes[0].Value.Replace("..","");
+                            _crdBox.ImageUrl = _imgNode.Attributes[0].Value.Replace("..","");
                         }
                     }
 
@@ -111,7 +113,7 @@ namespace DigimonDB.Models
             return _result;
         }
 
-        internal static List<Card> GetWebCardsByBox(CardBox bt)
+        public static List<Card> GetWebCardsByBox(CardBox bt, BackgroundWorker worker, DoWorkEventArgs e)
         {
             var _crdsPath = string.Format("/cardlist/?search=true&category={0}",bt.Id);
 
@@ -171,7 +173,10 @@ namespace DigimonDB.Models
 
                     var _cardInfoTop = crd.SelectSingleNode(".//div[@class='cardinfo_top']");
 
-                    _card.Imgs.Add(_cardInfoTop.SelectSingleNode(".//div[@class='card_img']//img").Attributes[0].Value.Replace("..",""));
+                    _card.Imgs.Add(new GenericImage()
+                    {
+                        ImgUrl = _cardInfoTop.SelectSingleNode(".//div[@class='card_img']//img").Attributes[0].Value.Replace("..", "")
+                    });
 
                     var _crdTopBody = _cardInfoTop.SelectSingleNode(".//div[@class='cardinfo_top_body']").SelectNodes(".//dl").ToList();
                     foreach (var dl in _crdTopBody)
@@ -216,7 +221,6 @@ namespace DigimonDB.Models
                             _card.SecurityEffect = dl.SelectSingleNode(".//dd").InnerText.Replace("-", "");
                     }
 
-
                     _result.Add(_card);
                 }
 
@@ -229,5 +233,27 @@ namespace DigimonDB.Models
 
             return _result;
         }
+
+        public static bool DownloadImage(string url, string path, BackgroundWorker worker, DoWorkEventArgs e)
+        {
+            var _result = false;
+
+            try
+            {
+                var client = new HttpClient();
+                using var s = client.GetStreamAsync(_baseUrl + url);
+                using var fs = new FileStream(path, FileMode.OpenOrCreate);
+                s.Result.CopyTo(fs);
+                _result = true;
+            }
+            catch (Exception)
+            {
+                //TODO
+                throw;
+            }
+
+            return _result;
+        }
+
     }
 }

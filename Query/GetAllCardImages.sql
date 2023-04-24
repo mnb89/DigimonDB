@@ -1,0 +1,7 @@
+SELECT
+	*
+FROM
+	CRDIMG
+WHERE
+	("ImgUrl" IS NOT NULL AND LENGTH("ImgUrl") > 0)
+	{0}

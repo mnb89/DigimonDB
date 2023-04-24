@@ -9,7 +9,27 @@
     <Grid>
         <Image HorizontalAlignment="Left" Height="Auto" Margin="20" VerticalAlignment="Top" Width="400" Source="/Img/logo.png"/>
         <Button x:Name="GetData" Content="SyncDB" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" Height="20" Width="60" Click="GetData_Click"/>
-        <ProgressBar x:Name="ProgBar" Margin="80,10,10,10" Width="Auto" Height="20" VerticalAlignment="Top" Minimum="0" Maximum="100" />
+        <StatusBar VerticalAlignment="Bottom" Height="25">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem Grid.Column="0" HorizontalContentAlignment="Left">
+                <Label x:Name="StatusLabel" Content="" Padding="0"/>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="1" HorizontalContentAlignment="Right">
+                <ProgressBar x:Name="ProgBar" Minimum="0" Maximum="100" Width="190" Height="18"/>
+            </StatusBarItem>
+        </StatusBar>
 
     </Grid>
 </Window>

@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity.Infrastructure.Interception;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
@@ -12,48 +16,73 @@ namespace DigimonDB.Models
 {
     public static class InternalFunctions
     {
-        public static List<CardBox> GetAndCheckNewCardBoxs(SQLiteConnection conn)
+
+        public static void DownloadImageFile(SQLiteConnection conn, BackgroundWorker worker, DoWorkEventArgs e)
         {
-            var _wCrdBoxs = WebFunctions.GetWebCardBoxs();
+            var _basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-            var _dCrdBoxs = DBFunctions.GetDBCardBoxs(conn, false);
+            var _list = DBFunctions.GetAllBoxImage(conn, true, worker, e);
 
-            var _dCodes = _dCrdBoxs.Select(bt => bt.Id).ToList();
-            var _crdBoxs = new List<CardBox>();
+            worker.ReportProgress(50); //Lettura immagini box completata. Inizio download immagini...
 
-            foreach (var bt in _wCrdBoxs)
+            var _perc = _list.Count > 0 ? (14 / _list.Count): 14;
+            var _actPerc = 50;
+
+            foreach (var item in _list)
             {
-                bt.Status = _dCodes.Contains(bt.Id) ?  STATUS.UPDATE: STATUS.NEW;
-                _crdBoxs.Add(bt);
+                if (!string.IsNullOrWhiteSpace(item.ImgUrl))
+                {
+                    var _fileExtension = item.ImgUrl.Split(".")[1];
+
+                    if (_fileExtension.Contains('?'))
+                        _fileExtension = _fileExtension.Split("?")[0];
+
+                    var _imgPath = string.Format("{0}\\Img\\Box\\{1}.{2}", _basePath, item.Code, _fileExtension);
+
+                    if (WebFunctions.DownloadImage(item.ImgUrl, _imgPath, worker, e))
+                        item.ImgPath = _imgPath;
+
+                    _actPerc += _perc;
+                    worker.ReportProgress(_actPerc);
+                }
             }
 
-            if (_crdBoxs.Count > 0)
-                DBFunctions.WriteCardBoxs(conn, _crdBoxs);
+            Thread.Sleep(100); //Download immagini box completato. 
 
-            return _wCrdBoxs;
-        }
+            DBFunctions.UpdateBoxImages(conn, _list, worker, e);
 
-        public static void GetAndCreateCards(SQLiteConnection conn,ProgressBar progBar, List<CardBox> crdBoxs)
-        {
+            worker.ReportProgress(66); //Inizio lettura immagini carte...
 
-            foreach (var bt in crdBoxs)
+            Thread.Sleep(100);
+
+            _list = DBFunctions.GetAllCardImage(conn, true, worker, e);
+
+            worker.ReportProgress(68); //Lettura immagini carte completata. Download immagini...
+
+            _perc = _list.Count > 0 ? (28 / _list.Count) : 28;
+            _actPerc = 68;
+
+            foreach (var item in _list)
             {
-                try
+                if (!string.IsNullOrWhiteSpace(item.ImgUrl))
                 {
-                    var _wCards = WebFunctions.GetWebCardsByBox(bt);
+                    var _fileName = item.ImgUrl.Split("/").Last();
 
-                    DBFunctions.WriteCards(conn, _wCards);
+                    var _imgPath = string.Format("{0}\\Img\\Card\\{1}", _basePath, _fileName);
 
+                    if (WebFunctions.DownloadImage(item.ImgUrl, _imgPath, worker, e))
+                        item.ImgPath = _imgPath;
+
+                    _actPerc += _perc;
+                    worker.ReportProgress(_actPerc);
                 }
-                catch (Exception)
-                {
-                    //TODO
-                    continue;
-                }
-               
             }
+            Thread.Sleep(100); //Download immagini carte completato. 
 
-            conn.Close();
+            DBFunctions.UpdateCardImages(conn, _list, worker, e);
+
+            worker.ReportProgress(98); //Ultimi accorgimenti...
+
         }
     }
 }

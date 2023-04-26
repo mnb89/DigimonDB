@@ -11,6 +11,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\icon_box_96.png" />
+    <None Remove="Assets\icon_card_96.png" />
+    <None Remove="Assets\icon_deck_96.png" />
+    <None Remove="Assets\icon_search_96.png" />
+    <None Remove="Assets\icon_user_96.png" />
+    <None Remove="Assets\img_arrow.png" />
+    <None Remove="Assets\max_def.png" />
+    <None Remove="Assets\max_mo.png" />
+    <None Remove="Assets\shutdown_def.png" />
+    <None Remove="Assets\shutdown_mo.png" />
     <None Remove="Img\digimoncardgamelogo.png" />
     <None Remove="Img\logo.png" />
   </ItemGroup>
@@ -20,6 +30,10 @@
     <Content Include="Img\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\img_arrow.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -119,6 +133,34 @@
     <None Update="Query\CreateTables.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Fonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\icon_box_96.png" />
+    <Resource Include="Assets\icon_card_96.png" />
+    <Resource Include="Assets\icon_deck_96.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\icon_search_96.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\icon_user_96.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\max_def.png" />
+    <Resource Include="Assets\max_mo.png" />
+    <Resource Include="Assets\shutdown_def.png" />
+    <Resource Include="Assets\shutdown_mo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Templates.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
   </ItemGroup>
 
 </Project>

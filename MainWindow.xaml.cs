@@ -34,6 +34,26 @@ namespace DIgimonDB
 
             conn = DBFunctions.CreateConnection();
         }
+        private void MaxBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Normal)
+            {
+                WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                if (WindowState == WindowState.Maximized)
+                {
+                    WindowState = WindowState.Normal;
+                }
+            }
+        }
+
+        private void CloseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
 
         // Set up the BackgroundWorker object by 
         // attaching event handlers. 
@@ -111,39 +131,39 @@ namespace DIgimonDB
         {
             var _value = e.ProgressPercentage;
 
-            if (_value == 1)
-                StatusLabel.Content = "Lettura online box...";
-            else if (_value == 2)
-                StatusLabel.Content = "Estrazione nuovi box...";
-            else if (_value == 7)
-                StatusLabel.Content = "Aggiunta nuovi box...";
-            else if (_value == 8)
-                StatusLabel.Content = "Aggiunta box completata. Aggiornamento carte...";
-            else if (_value == 48)
-                StatusLabel.Content = "Aggiornamento carte completato. Inizio lettura immagini box... ";
-            else if (_value == 50)
-                StatusLabel.Content = "Lettura immagini box completata. Inizio download immagini...";
-            else if(_value == 64)
-                StatusLabel.Content = "Download immagini box completato.";
-            else if (_value == 66)
-                StatusLabel.Content = "Inizio lettura immagini carte...";
-            else if (_value == 68)
-                StatusLabel.Content = "Lettura immagini carte completata. Download immagini...";
-            else if (_value == 96)
-                StatusLabel.Content = "Download immagini carte completato.";
-            else if (_value == 98)
-                StatusLabel.Content = "Ultimi accorgimenti...";
-            else if (_value == 100)
-                StatusLabel.Content = "Aggiornamento completato.";
+            //if (_value == 1)
+            //    StatusLabel.Content = "Lettura online box...";
+            //else if (_value == 2)
+            //    StatusLabel.Content = "Estrazione nuovi box...";
+            //else if (_value == 7)
+            //    StatusLabel.Content = "Aggiunta nuovi box...";
+            //else if (_value == 8)
+            //    StatusLabel.Content = "Aggiunta box completata. Aggiornamento carte...";
+            //else if (_value == 48)
+            //    StatusLabel.Content = "Aggiornamento carte completato. Inizio lettura immagini box... ";
+            //else if (_value == 50)
+            //    StatusLabel.Content = "Lettura immagini box completata. Inizio download immagini...";
+            //else if(_value == 64)
+            //    StatusLabel.Content = "Download immagini box completato.";
+            //else if (_value == 66)
+            //    StatusLabel.Content = "Inizio lettura immagini carte...";
+            //else if (_value == 68)
+            //    StatusLabel.Content = "Lettura immagini carte completata. Download immagini...";
+            //else if (_value == 96)
+            //    StatusLabel.Content = "Download immagini carte completato.";
+            //else if (_value == 98)
+            //    StatusLabel.Content = "Ultimi accorgimenti...";
+            //else if (_value == 100)
+            //    StatusLabel.Content = "Aggiornamento completato.";
 
-            ProgBar.Value = _value;
+            //ProgBar.Value = _value;
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
         {
             Thread.Sleep(100);
-            ProgBar.Value = 0;
-            GetData.IsEnabled = true;
+            //ProgBar.Value = 0;
+            //GetData.IsEnabled = true;
         }
 
 
@@ -191,7 +211,7 @@ namespace DIgimonDB
 
         private void GetData_Click(object sender, RoutedEventArgs e)
         {
-            GetData.IsEnabled = false;
+            //GetData.IsEnabled = false;
             backgroundWorker1.RunWorkerAsync();
         }
     }

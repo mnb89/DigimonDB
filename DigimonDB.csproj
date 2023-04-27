@@ -5,12 +5,13 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <PackageIcon>icon.png</PackageIcon>
-    <ApplicationIcon>Img\icon.ico</ApplicationIcon>
+    <PackageIcon>icon.ico</PackageIcon>
+    <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\card_logo.png" />
     <None Remove="Assets\icon_box_96.png" />
     <None Remove="Assets\icon_card_96.png" />
     <None Remove="Assets\icon_deck_96.png" />
@@ -19,21 +20,31 @@
     <None Remove="Assets\img_arrow.png" />
     <None Remove="Assets\max_def.png" />
     <None Remove="Assets\max_mo.png" />
+    <None Remove="Assets\ogp.jpg" />
     <None Remove="Assets\shutdown_def.png" />
     <None Remove="Assets\shutdown_mo.png" />
-    <None Remove="Img\digimoncardgamelogo.png" />
-    <None Remove="Img\logo.png" />
+    <None Remove="Assets\sync_def.png" />
+    <None Remove="Assets\sync_mo.png" />
+    <None Remove="Media\digimoncardgamelogo.png" />
+    <None Remove="Media\logo.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Img\icon.ico" />
-    <Content Include="Img\logo.png">
+    <Content Include="Assets\icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\icon.ico" />
+    <Resource Include="Assets\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\img_arrow.png" />
+    <Resource Include="Assets\card_logo.png" />
+    <Resource Include="Assets\img_arrow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +53,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Assets\icon.ico">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Update="Img\icon.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
@@ -137,11 +152,16 @@
 
   <ItemGroup>
     <Folder Include="Fonts\" />
+    <Folder Include="Media\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\icon_box_96.png" />
-    <Resource Include="Assets\icon_card_96.png" />
+    <Resource Include="Assets\icon_box_96.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\icon_card_96.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\icon_deck_96.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -151,10 +171,27 @@
     <Resource Include="Assets\icon_user_96.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Assets\max_def.png" />
-    <Resource Include="Assets\max_mo.png" />
-    <Resource Include="Assets\shutdown_def.png" />
-    <Resource Include="Assets\shutdown_mo.png" />
+    <Resource Include="Assets\max_def.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\max_mo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ogp.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\shutdown_def.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\shutdown_mo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\sync_def.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\sync_mo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

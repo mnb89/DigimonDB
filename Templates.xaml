@@ -362,6 +362,25 @@
     </Style>
 
 
+    <!--// Progress Bar //-->
+
+    <Style x:Key="ProgressBarStyle"
+           TargetType="{x:Type ProgressBar}">
+
+        <Setter Property="Height"
+                Value="20" />
+        <Setter Property="Width"
+                Value="60" />
+        <Setter Property="HorizontalAlignment"
+                Value="Right" />
+        <Setter Property="VerticalAlignment"
+                Value="Top" />
+        <Setter Property="Background"
+                Value="Transparent"/>
+        <Setter Property="Margin"
+                Value="0,25,138,0" />
+    </Style>
+
     <!--// Close App Button Style //-->
 
     <ImageBrush x:Key="close_def"
@@ -413,6 +432,71 @@
                             <Setter Property="Background"
                                     TargetName="border"
                                     Value="{StaticResource close_mo}" />
+
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+
+            </Setter.Value>
+
+        </Setter>
+
+
+    </Style>
+
+
+    <!--// Sync App Button Style //-->
+
+    <ImageBrush x:Key="sync_def"
+                ImageSource="Assets/sync_def.png"
+                Stretch="Fill" />
+
+    <ImageBrush x:Key="sync_mo"
+                ImageSource="Assets/sync_mo.png"
+                Stretch="Fill" />
+
+    <Style x:Key="SyncBtnStyle"
+           TargetType="{x:Type Button}">
+
+        <Setter Property="Height"
+                Value="35" />
+        <Setter Property="Width"
+                Value="35" />
+        <Setter Property="HorizontalAlignment"
+                Value="Right" />
+        <Setter Property="VerticalAlignment"
+                Value="Top" />
+        <Setter Property="Margin"
+                Value="0,20,98,0" />
+
+        <Setter Property="Template">
+
+            <Setter.Value>
+
+                <ControlTemplate TargetType="{x:Type Button}">
+
+                    <Border x:Name="border"
+                            BorderThickness="0"
+                            Background="{StaticResource sync_def}" />
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+
+                            <Setter Property="Background"
+                                    TargetName="border"
+                                    Value="{StaticResource sync_mo}" />
+
+                        </Trigger>
+
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+
+                            <Setter Property="IsEnabled"
+                                    Value="False" />
 
                         </Trigger>
 

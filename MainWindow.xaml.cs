@@ -32,6 +32,8 @@ namespace DIgimonDB
             InitializeComponent();
             InitializeBackgroundWorker();
 
+            NavFrame.Navigate(new Uri("Pages/Home.xaml", UriKind.Relative));
+
             conn = DBFunctions.CreateConnection();
         }
         private void MaxBtn_Click(object sender, RoutedEventArgs e)
@@ -54,6 +56,10 @@ namespace DIgimonDB
             Close();
         }
 
+        private void SyncBtn_Click(object sender, RoutedEventArgs e)
+        {
+            backgroundWorker1.RunWorkerAsync();
+        }
 
         // Set up the BackgroundWorker object by 
         // attaching event handlers. 
@@ -156,14 +162,14 @@ namespace DIgimonDB
             //else if (_value == 100)
             //    StatusLabel.Content = "Aggiornamento completato.";
 
-            //ProgBar.Value = _value;
+            ProgBar.Value = _value;
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
         {
             Thread.Sleep(100);
-            //ProgBar.Value = 0;
-            //GetData.IsEnabled = true;
+            ProgBar.Value = 0;
+            SyncBtn.IsEnabled = true;
         }
 
 
@@ -209,10 +215,29 @@ namespace DIgimonDB
             return _crdBoxs;
         }
 
-        private void GetData_Click(object sender, RoutedEventArgs e)
+        private void SearchCrdBtn_Click(object sender, RoutedEventArgs e)
         {
-            //GetData.IsEnabled = false;
-            backgroundWorker1.RunWorkerAsync();
+            NavFrame.Navigate(new Uri("Pages/SearchCrd.xaml", UriKind.Relative));
+        }
+
+        private void SearchBoxBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavFrame.Navigate(new Uri("Pages/SearchBox.xaml", UriKind.Relative));
+        }
+
+        private void DeckBuildBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavFrame.Navigate(new Uri("Pages/DeckBuilder.xaml", UriKind.Relative));
+        }
+
+        private void UserBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavFrame.Navigate(new Uri("Pages/User.xaml", UriKind.Relative));
+        }
+
+        private void HomeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavFrame.Navigate(new Uri("Pages/Home.xaml", UriKind.Relative));
         }
     }
 }

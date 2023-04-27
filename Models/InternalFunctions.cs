@@ -37,9 +37,10 @@ namespace DigimonDB.Models
                     if (_fileExtension.Contains('?'))
                         _fileExtension = _fileExtension.Split("?")[0];
 
-                    var _imgPath = string.Format("{0}\\Img\\Box\\{1}.{2}", _basePath, item.Code, _fileExtension);
+                    var _imgPath = string.Format("\\Media\\BT\\{0}.{1}", item.Code, _fileExtension);
+                    var _fullPath = _basePath + _imgPath;
 
-                    if (WebFunctions.DownloadImage(item.ImgUrl, _imgPath, worker, e))
+                    if (WebFunctions.DownloadImage(item.ImgUrl, _fullPath, worker, e))
                         item.ImgPath = _imgPath;
 
                     _actPerc += _perc;
@@ -68,9 +69,10 @@ namespace DigimonDB.Models
                 {
                     var _fileName = item.ImgUrl.Split("/").Last();
 
-                    var _imgPath = string.Format("{0}\\Img\\Card\\{1}", _basePath, _fileName);
+                    var _imgPath = string.Format("\\Media\\IMG\\{0}", _fileName);
+                    var _fullPath = _basePath + _imgPath;
 
-                    if (WebFunctions.DownloadImage(item.ImgUrl, _imgPath, worker, e))
+                    if (WebFunctions.DownloadImage(item.ImgUrl, _fullPath, worker, e))
                         item.ImgPath = _imgPath;
 
                     _actPerc += _perc;

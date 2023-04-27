@@ -14,7 +14,11 @@
    
     
     <Grid Background="#23262B">
-
+       
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <!--<StatusBar VerticalAlignment="Bottom" Height="25" Background="#2E333A">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -32,12 +36,11 @@
             <StatusBarItem Grid.Column="0" HorizontalContentAlignment="Right">
                 <Label x:Name="StatusLabel" Padding="0" Foreground="#525965" FontSize="10"/>
             </StatusBarItem>
-            <StatusBarItem Grid.Column="1" HorizontalContentAlignment="Right">
-                <ProgressBar x:Name="ProgBar" Minimum="0" Maximum="100" Width="160" Height="18" Background="Transparent"/>
+           
             </StatusBarItem>
         </StatusBar>-->
 
-        <StackPanel Background="#2E333A"
+        <StackPanel Grid.Column="0" Background="#2E333A"
                     Width="230"
                     Orientation="Vertical"
                     HorizontalAlignment="Left">
@@ -45,7 +48,9 @@
             <Grid Height="80"
                   VerticalAlignment="Top"
                   Margin="0,10,0,0">
-                <Image Source="/Img/logo.png"/>
+                <Button Background="Transparent" BorderBrush="Transparent" Click="HomeBtn_Click">
+                    <Image Source="/Assets/logo.png"/>
+                </Button>
                 <!--<Label Padding="0,0,10,0" HorizontalAlignment="Right" Content=" by Alberto Vacca" Foreground="#FFFF"/>-->
             </Grid>
 
@@ -67,7 +72,8 @@
                     </MenuItem.Icon>
 
                     <MenuItem Header="Singole"
-                              Template="{StaticResource Item_Template}">
+                              Template="{StaticResource Item_Template}"
+                              Click="SearchCrdBtn_Click">
 
                         <MenuItem.Icon>
 
@@ -77,7 +83,8 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Box"
-                              Template="{StaticResource Item_Template}">
+                              Template="{StaticResource Item_Template}"
+                              Click="SearchBoxBtn_Click">
 
                         <MenuItem.Icon>
 
@@ -91,14 +98,16 @@
 
                
                 <MenuItem Header="Deck" 
-                          Template="{StaticResource Menu_Template}">
+                          Template="{StaticResource Menu_Template}"
+                          Click="DeckBuildBtn_Click">
                     <MenuItem.Icon>
                         <Image Source="Assets/icon_deck_96.png"
                                Stretch="Fill"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Utente" 
-                          Template="{StaticResource Menu_Template}">
+                          Template="{StaticResource Menu_Template}"
+                          Click="UserBtn_Click">
                     <MenuItem.Icon>
                         <Image Source="Assets/icon_user_96.png"
                                Stretch="Fill"/>
@@ -110,7 +119,21 @@
             </Menu>
                     
         </StackPanel>
-        
-        
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!--<Label Grid.Row="0" x:Name="StatusLabel" Padding="0" Foreground="#525965" FontSize="10"/>-->
+            <ProgressBar Grid.Row="0" x:Name="ProgBar" Minimum="0" Maximum="100" Style="{StaticResource ProgressBarStyle}"/>
+            <Button Grid.Row="0" x:Name="SyncBtn" Width="30" Height="30"
+                    Style="{StaticResource SyncBtnStyle}" Click="SyncBtn_Click"/>
+            <Button Grid.Row="0" x:Name="MaxBtn" Width="30" Height="30"
+                    Style="{StaticResource MaxBtnStyle}" Click="MaxBtn_Click"/>
+            <Button Grid.Row="0" x:Name="CloseBtn" Width="30" Height="30"
+                    Style="{StaticResource CloseBtnStyle}" Click="CloseBtn_Click"/>
+            <Frame Grid.Row="1" x:Name="NavFrame" NavigationUIVisibility="Hidden" Background="#23262B" />
+        </Grid>
     </Grid>
 </Window>
